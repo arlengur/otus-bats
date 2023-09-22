@@ -19,12 +19,22 @@ object Show {
       def show(a: Int): String = a.toString
     }
 
+  implicit val boolShow: Show[Boolean] =
+    new Show[Boolean] {
+      def show(a: Boolean): String = a.toString
+    }
+
 
   // 1.2 Instances with conditional implicit
 
   implicit def listShow[A](implicit ev: Show[A]): Show[List[A]] =
     new Show[List[A]] {
       def show(as: List[A]): String = "[" ++ as.map(a => ev.show(a)).mkString(",") ++ "]"
+    }
+
+  implicit def setShow[A](implicit ev: Show[A]): Show[Set[A]] =
+    new Show[Set[A]] {
+      def show(as: Set[A]): String = "[" ++ as.map(a => ev.show(a)).mkString(",") ++ "]"
     }
 
 
